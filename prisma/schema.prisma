@@ -1,0 +1,75 @@
+// schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum PostStatus {
+  draft
+  published
+}
+
+model User {
+  id           String    @id @default(uuid())
+  email        String    @unique
+  passwordHash String
+  name         String?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  sessions     Session[]
+
+  @@map("User")
+}
+
+model Session {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+  data      Json?
+
+  @@index([userId])
+  @@index([expiresAt])
+  @@map("Session")
+}
+
+model BlogPost {
+  id          String     @id @default(uuid())
+  title       String
+  slug        String     @unique
+  content     String     @db.Text
+  excerpt     String?
+  status      PostStatus @default(draft)
+  publishedAt DateTime?
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  metadata    Json?
+
+  @@index([slug])
+  @@index([status])
+  @@index([publishedAt(sort: Desc)])
+  @@index([createdAt(sort: Desc)])
+  @@map("BlogPost")
+}
+
+model ResumeItem {
+  id           String   @id @default(uuid())
+  company      String
+  position     String
+  description  String   @db.Text
+  startDate    DateTime @db.Date
+  endDate      DateTime? @db.Date
+  displayOrder Int      @default(0)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([displayOrder(sort: Desc)])
+  @@index([startDate(sort: Desc)])
+  @@map("ResumeItem")
+}

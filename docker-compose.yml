@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  db:
+    image: postgres:16-alpine
+    container_name: lunblog-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: lunblog
+      POSTGRES_PASSWORD: lunblog_secure_password_2024
+      POSTGRES_DB: lunblog
+    ports:
+      - "5433:5432"  # Using 5433 to avoid conflict with your existing PostgreSQL
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U lunblog"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Next.js Application
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: lunblog-app
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      DATABASE_URL: postgresql://lunblog:lunblog_secure_password_2024@db:5432/lunblog
+      NEXTAUTH_SECRET: EDc/H0ZQpzAO5l2iJVIV6/fpdcoPvSgcGY+exvXz76A=
+      NEXTAUTH_URL: http://localhost:3000
+      NODE_ENV: production
+    depends_on:
+      db:
+        condition: service_healthy
+    command: sh -c "npx prisma migrate deploy && node server.js"
+
+volumes:
+  postgres_data:
