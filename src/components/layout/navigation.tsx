@@ -1,42 +1,76 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
+import { Menu } from 'antd';
+import { ReadOutlined, UserOutlined, FileTextOutlined, HomeOutlined } from '@ant-design/icons';
+import type { MenuProps } from 'antd';
+import Title from 'antd/es/typography';
 
 export function Navigation() {
   const pathname = usePathname();
+  const router = useRouter();
 
-  const links = [
-    { href: '/blog', label: 'Stories' },
-    { href: '/about', label: 'About' },
-    { href: '/resume', label: 'Resume' },
+  const getSelectedKey = () => {
+    if (pathname === '/') return 'home';
+    if (pathname.startsWith('/blog')) return 'blog';
+    if (pathname.startsWith('/about')) return 'about';
+    if (pathname.startsWith('/resume')) return 'resume';
+    return 'home';
+  };
+
+  const [current, setCurrent] = useState(getSelectedKey());
+
+  useEffect(() => {
+    setCurrent(getSelectedKey());
+  }, [pathname]);
+
+  const items: MenuProps['items'] = [
+    {
+      label: <Link href="/">Home</Link>,
+      key: 'home',
+      icon: <HomeOutlined />,
+    },
+    {
+      label: <Link href="/blog">Stories</Link>,
+      key: 'blog',
+      icon: <ReadOutlined />,
+    },
+    {
+      label: <Link href="/about">About</Link>,
+      key: 'about',
+      icon: <UserOutlined />,
+    },
+    {
+      label: <Link href="/resume">Resume</Link>,
+      key: 'resume',
+      icon: <FileTextOutlined />,
+    },
   ];
 
   return (
-    <nav className="border-b" style={{ borderColor: 'var(--border-color)' }}>
+    <div style={{ borderBottom: '1px solid #f0f0f0', backgroundColor: '#fff' }}>
       <div className="max-w-6xl mx-auto px-6">
-        <div className="flex items-center justify-between h-20">
-          <Link href="/" className="text-3xl font-bold tracking-tight" style={{ fontFamily: 'Merriweather, Georgia, serif' }}>
-            LunBlog
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', height: 80 }}>
+          <Link href="/" style={{ textDecoration: 'none' }}>
+            <Title style={{
+              margin: 0,
+              fontFamily: 'Merriweather, Georgia, serif',
+              color: '#000'
+            }}>
+              LunBlog
+            </Title>
           </Link>
-          <div className="flex items-center gap-8">
-            {links.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={`text-sm transition-colors ${
-                  pathname === link.href
-                    ? 'font-medium'
-                    : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200'
-                }`}
-                style={pathname === link.href ? { color: 'var(--foreground)' } : {}}
-              >
-                {link.label}
-              </Link>
-            ))}
-          </div>
+          <Menu
+            mode="horizontal"
+            selectedKeys={[current]}
+            items={items}
+            style={{ border: 'none', flex: 1, justifyContent: 'flex-end' }}
+          />
         </div>
       </div>
-    </nav>
+    </div>
   );
 }
+

@@ -1,55 +1,63 @@
+import { Typography, Divider } from 'antd';
+import Title from 'antd/es/typography';
+import Paragraph from 'antd/es/typography';
+import Text from 'antd/es/typography';
+
+
 export default function AboutPage() {
   return (
     <div className="max-w-3xl mx-auto px-6 py-16">
       <article className="article-content">
-        <h1 className="text-5xl md:text-6xl font-bold mb-12 leading-tight" style={{ fontFamily: 'Merriweather, Georgia, serif' }}>
+        <Title style={{
+          fontFamily: 'Merriweather, Georgia, serif',
+          fontSize: '3.5rem',
+          marginBottom: 48,
+          lineHeight: 1.2
+        }}>
           About Me
-        </h1>
+        </Title>
 
-        <p className="text-xl leading-relaxed mb-8">
+        <Paragraph style={{ fontSize: 20, marginBottom: 32 }}>
           Welcome to my personal tech blog! I'm a software engineer passionate about
           building scalable web applications and sharing insights about the latest
           trends in technology.
-        </p>
+        </Paragraph>
 
-        <h2 className="text-3xl font-bold mt-12 mb-6" style={{ fontFamily: 'Inter, sans-serif' }}>My Journey</h2>
-        <p className="leading-relaxed mb-6">
+        <Divider />
+
+        <Title style={{ marginTop: 48, marginBottom: 24 }}>My Journey</Title>
+        <Paragraph style={{ fontSize: 16, marginBottom: 24 }}>
           With years of experience in full-stack development, I've worked on diverse
           projects ranging from startups to enterprise applications. My expertise
           includes modern web frameworks, cloud infrastructure, and agile development
           practices.
-        </p>
+        </Paragraph>
 
-        <h2 className="text-3xl font-bold mt-12 mb-6" style={{ fontFamily: 'Inter, sans-serif' }}>What I Write About</h2>
-        <ul className="space-y-3 mb-6">
-          <li className="flex items-start">
-            <span className="mr-3 mt-2">•</span>
-            <span>Web development best practices and patterns</span>
+        <Title style={{ marginTop: 48, marginBottom: 24 }}>What I Write About</Title>
+        <ul style={{ fontSize: 16, lineHeight: 1.8, marginBottom: 24 }}>
+          <li style={{ marginBottom: 12 }}>
+            <Text>Web development best practices and patterns</Text>
           </li>
-          <li className="flex items-start">
-            <span className="mr-3 mt-2">•</span>
-            <span>Deep dives into JavaScript, TypeScript, and modern frameworks</span>
+          <li style={{ marginBottom: 12 }}>
+            <Text>Deep dives into JavaScript, TypeScript, and modern frameworks</Text>
           </li>
-          <li className="flex items-start">
-            <span className="mr-3 mt-2">•</span>
-            <span>Cloud architecture and deployment strategies</span>
+          <li style={{ marginBottom: 12 }}>
+            <Text>Cloud architecture and deployment strategies</Text>
           </li>
-          <li className="flex items-start">
-            <span className="mr-3 mt-2">•</span>
-            <span>Reflections on the evolving tech landscape</span>
+          <li style={{ marginBottom: 12 }}>
+            <Text>Reflections on the evolving tech landscape</Text>
           </li>
-          <li className="flex items-start">
-            <span className="mr-3 mt-2">•</span>
-            <span>Practical tutorials and code examples</span>
+          <li style={{ marginBottom: 12 }}>
+            <Text>Practical tutorials and code examples</Text>
           </li>
         </ul>
 
-        <h2 className="text-3xl font-bold mt-12 mb-6" style={{ fontFamily: 'Inter, sans-serif' }}>Get In Touch</h2>
-        <p className="leading-relaxed">
+        <Title style={{ marginTop: 48, marginBottom: 24 }}>Get In Touch</Title>
+        <Paragraph style={{ fontSize: 16 }}>
           I love connecting with fellow developers and tech enthusiasts. Feel free
           to reach out if you have questions, want to collaborate, or just want to
           chat about technology!
-        </p>
+        </Paragraph>
       </article>
     </div>
   );

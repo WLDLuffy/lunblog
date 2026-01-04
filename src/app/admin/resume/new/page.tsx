@@ -2,9 +2,6 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { Card, CardHeader } from '@/components/ui/card';
 
 export default function NewResumeItemPage() {
   const router = useRouter();
@@ -58,11 +55,10 @@ export default function NewResumeItemPage() {
   return (
     <div>
       <h1 className="text-3xl font-bold mb-6">Add Resume Item</h1>
-      <Card>
+      {/* <Card>
         <CardHeader>
           <h2 className="text-xl font-semibold">Work Experience Details</h2>
         </CardHeader>
-        {/* <CardBody> */}
           <form onSubmit={handleSubmit} className="space-y-4">
             {error && (
               <div className="p-3 bg-red-100 dark:bg-red-900 text-red-700 dark:text-red-200 rounded-lg">
@@ -157,8 +153,7 @@ export default function NewResumeItemPage() {
               </Button>
             </div>
           </form>
-        {/* </CardBody> */}
-      </Card>
+      </Card> */}
     </div>
   );
 }

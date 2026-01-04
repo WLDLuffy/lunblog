@@ -2,9 +2,6 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { Card, CardHeader } from '@/components/ui/card';
 
 interface EditPostPageProps {
   params: Promise<{ id: string }>;
@@ -80,11 +77,10 @@ export default function EditPostPage(props: EditPostPageProps) {
   return (
     <div>
       <h1 className="text-3xl font-bold mb-6">Edit Post</h1>
-      <Card>
+      {/* <Card>
         <CardHeader>
           <h2 className="text-xl font-semibold">Post Details</h2>
         </CardHeader>
-        {/* <CardBody> */}
           <form onSubmit={handleSubmit} className="space-y-4">
             {error && (
               <div className="p-3 bg-red-100 dark:bg-red-900 text-red-700 dark:text-red-200 rounded-lg">
@@ -159,8 +155,7 @@ export default function EditPostPage(props: EditPostPageProps) {
               </Button>
             </div>
           </form>
-        {/* </CardBody> */}
-      </Card>
+      </Card> */}
     </div>
   );
 }

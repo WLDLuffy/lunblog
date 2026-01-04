@@ -2,19 +2,18 @@
 
 import { Suspense, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
+import { Form, Input, Button, Alert, Typography } from 'antd';
+import { UserOutlined, LockOutlined } from '@ant-design/icons';
+import Title from 'antd/es/typography';
+import Paragraph from 'antd/es/typography';
 
 function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const onFinish = async (values: { email: string; password: string }) => {
     setError('');
     setLoading(true);
 
@@ -22,7 +21,7 @@ function LoginForm() {
       const response = await fetch('/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify(values),
       });
 
       const data = await response.json();
@@ -43,39 +42,50 @@ function LoginForm() {
 
   return (
     <div className="max-w-md mx-auto px-6 py-24">
-      <div className="mb-12 text-center">
-        <h1 className="text-4xl font-bold mb-3" style={{ fontFamily: 'Merriweather, Georgia, serif' }}>Welcome back</h1>
-        <p className="text-muted-foreground">
+      <div style={{ marginBottom: 48, textAlign: 'center' }}>
+        <Title style={{ fontFamily: 'Merriweather, Georgia, serif' }}>
+          Welcome back
+        </Title>
+        <Paragraph>
           Sign in to access the admin dashboard
-        </p>
+        </Paragraph>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-6">
+      <Form
+        name="login"
+        onFinish={onFinish}
+        layout="vertical"
+        size="large"
+      >
         {error && (
-          <div className="p-4 bg-destructive/10 border border-destructive/30 text-destructive rounded-lg text-sm">
-            {error}
-          </div>
+          <Alert
+            message={error}
+            type="error"
+            showIcon
+            style={{ marginBottom: 24 }}
+          />
         )}
-        <Input
-          label="Email"
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-          disabled={loading}
-        />
-        <Input
-          label="Password"
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-          disabled={loading}
-        />
-        <Button type="submit" className="w-full" size="lg" disabled={loading}>
-          {loading ? 'Signing in...' : 'Sign In'}
-        </Button>
-      </form>
+
+        <Form.Item
+          name="email"
+          rules={[{ required: true, type: 'email', message: 'Please enter a valid email' }]}
+        >
+          <Input prefix={<UserOutlined />} placeholder="Email" disabled={loading} />
+        </Form.Item>
+
+        <Form.Item
+          name="password"
+          rules={[{ required: true, message: 'Please enter your password' }]}
+        >
+          <Input.Password prefix={<LockOutlined />} placeholder="Password" disabled={loading} />
+        </Form.Item>
+
+        <Form.Item>
+          <Button type="primary" htmlType="submit" loading={loading} block>
+            {loading ? 'Signing in...' : 'Sign In'}
+          </Button>
+        </Form.Item>
+      </Form>
     </div>
   );
 }

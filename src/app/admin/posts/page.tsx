@@ -2,8 +2,6 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
 
 interface Post {
   id: string;
@@ -52,23 +50,20 @@ export default function AdminPostsPage() {
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-3xl font-bold">Manage Blog Posts</h1>
         <Link href="/admin/posts/new">
-          <Button>Create New Post</Button>
+          {/* <Button>Create New Post</Button> */}
         </Link>
       </div>
 
-      {posts.length === 0 ? (
+      {/* {posts.length === 0 ? (
         <Card>
-          {/* <CardBody> */}
             <p className="text-center text-gray-600 dark:text-gray-400 py-8">
               No blog posts yet. Create your first post!
             </p>
-          {/* </CardBody> */}
         </Card>
       ) : (
         <div className="space-y-4">
           {posts.map((post) => (
             <Card key={post.id}>
-              {/* <CardBody> */}
                 <div className="flex justify-between items-start">
                   <div>
                     <h2 className="text-xl font-semibold">{post.title}</h2>
@@ -102,11 +97,10 @@ export default function AdminPostsPage() {
                     </Button>
                   </div>
                 </div>
-              {/* </CardBody> */}
             </Card>
           ))}
         </div>
-      )}
+      )} */}
     </div>
   );
 }

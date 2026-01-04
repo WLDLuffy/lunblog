@@ -1,6 +1,11 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import { Navigation } from '@/components/layout/navigation';
+import { AntdRegistry } from '@ant-design/nextjs-registry';
+import { Layout } from 'antd';
+import Content from 'antd/es/layout';
+import Footer from 'antd/es/layout';
+import Text from 'antd/es/typography';
 
 export const metadata: Metadata = {
   title: 'LunBlog - Tech Insights',
@@ -15,13 +20,19 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="min-h-screen flex flex-col">
-        <Navigation />
-        <main className="flex-1">{children}</main>
-        <footer className="border-t py-12 text-center text-sm" style={{ borderColor: 'var(--border-color)', color: 'var(--foreground)', opacity: 0.6 }}>
-          <div className="max-w-6xl mx-auto px-6">
-            © {new Date().getFullYear()} LunBlog. All rights reserved.
-          </div>
-        </footer>
+        <AntdRegistry>
+          <Layout style={{ minHeight: '100vh', backgroundColor: '#fff' }}>
+            <Navigation />
+            <Content>
+              {children}
+            </Content>
+            <Footer style={{ textAlign: 'center', borderTop: '1px solid #f0f0f0', backgroundColor: '#fafafa' }}>
+              <Text>
+                © {new Date().getFullYear()} LunBlog. All rights reserved.
+              </Text>
+            </Footer>
+          </Layout>
+        </AntdRegistry>
       </body>
     </html>
   );

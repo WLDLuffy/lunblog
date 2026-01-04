@@ -1,6 +1,8 @@
 import { prisma } from '@/lib/prisma';
 import { BlogPostCard } from '@/components/blog/blog-post-card';
-import { Separator } from '@/components/ui/separator';
+import { Typography, Divider, Empty } from 'antd';
+import Title from 'antd/es/typography';
+import Paragraph from 'antd/es/typography';
 
 export const dynamic = 'force-dynamic';
 
@@ -20,18 +22,26 @@ export default async function BlogPage() {
 
   return (
     <div className="max-w-4xl mx-auto px-6 py-16">
-      <div className="mb-16 text-center">
-        <h1 className="text-5xl md:text-6xl font-bold mb-4" style={{ fontFamily: 'Merriweather, Georgia, serif' }}>Stories</h1>
-        <p className="text-lg text-muted-foreground">Thoughts, ideas, and stories</p>
+      <div style={{ marginBottom: 64, textAlign: 'center' }}>
+        <Title style={{ fontFamily: 'Merriweather, Georgia, serif', fontSize: '3.5rem' }}>
+          Stories
+        </Title>
+        <Paragraph style={{ fontSize: 18, color: 'rgba(0, 0, 0, 0.65)' }}>
+          Thoughts, ideas, and stories
+        </Paragraph>
       </div>
 
-      <Separator className="mb-12" />
+      <Divider />
 
       {posts.length === 0 ? (
-        <div className="text-center py-24">
-          <p className="text-xl text-muted-foreground">
-            No stories published yet. Check back soon!
-          </p>
+        <div style={{ padding: '96px 0', textAlign: 'center' }}>
+          <Empty
+            description={
+              <span style={{ fontSize: 20, color: 'rgba(0, 0, 0, 0.45)' }}>
+                No stories published yet. Check back soon!
+              </span>
+            }
+          />
         </div>
       ) : (
         <div>

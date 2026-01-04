@@ -1,7 +1,10 @@
 import { prisma } from '@/lib/prisma';
 import { notFound } from 'next/navigation';
-import { Badge } from '@/components/ui/badge';
-import { Separator } from '@/components/ui/separator';
+import { Tag, Space, Divider } from 'antd';
+import { ClockCircleOutlined, CalendarOutlined } from '@ant-design/icons';
+import Title from 'antd/es/typography';
+import Paragraph from 'antd/es/typography';
+import Text from 'antd/es/typography';
 
 export const dynamic = 'force-dynamic';
 
@@ -27,42 +30,44 @@ export default async function BlogPostPage(props: BlogPostPageProps) {
   return (
     <div className="max-w-3xl mx-auto px-6 py-16">
       <article>
-        <header className="mb-16">
+        <header style={{ marginBottom: 64 }}>
           {tags && tags.length > 0 && (
-            <div className="flex flex-wrap gap-2 mb-6">
+            <Space size={[0, 8]} wrap style={{ marginBottom: 24 }}>
               {tags.map((tag) => (
-                <Badge key={tag} variant="secondary">
-                  {tag}
-                </Badge>
+                <Tag key={tag} color="blue">{tag}</Tag>
               ))}
-            </div>
+            </Space>
           )}
-          <h1 className="text-5xl md:text-6xl font-bold mb-8 leading-tight" style={{ fontFamily: 'Merriweather, Georgia, serif' }}>
+          <Title style={{
+            fontFamily: 'Merriweather, Georgia, serif',
+            fontSize: '3.5rem',
+            marginBottom: 32,
+            lineHeight: 1.2
+          }}>
             {post.title}
-          </h1>
-          <div className="flex items-center gap-3 text-sm text-muted-foreground">
+          </Title>
+          <Space size="large">
             {post.publishedAt && (
-              <time dateTime={post.publishedAt.toISOString()}>
-                {new Date(post.publishedAt).toLocaleDateString('en-US', {
+              <Text>
+                <CalendarOutlined /> {new Date(post.publishedAt).toLocaleDateString('en-US', {
                   month: 'long',
                   day: 'numeric',
                   year: 'numeric',
                 })}
-              </time>
+              </Text>
             )}
             {readingTime && (
-              <>
-                <span>·</span>
-                <span>{readingTime} min read</span>
-              </>
+              <Text>
+                <ClockCircleOutlined /> {readingTime} min read
+              </Text>
             )}
-          </div>
+          </Space>
         </header>
 
-        <Separator className="mb-12" />
+        <Divider />
 
-        <div className="article-content">
-          <div className="whitespace-pre-wrap">{post.content}</div>
+        <div className="article-content" style={{ marginTop: 48 }}>
+          <div style={{ whiteSpace: 'pre-wrap' }}>{post.content}</div>
         </div>
       </article>
     </div>

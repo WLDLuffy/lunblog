@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect } from 'react';
-import { Button } from '@/components/ui/button';
 
 export default function Error({
   error,
@@ -21,7 +20,7 @@ export default function Error({
         <p className="text-gray-600 dark:text-gray-400 mb-8">
           We encountered an unexpected error. Please try again.
         </p>
-        <Button onClick={() => reset()}>Try again</Button>
+        {/* <Button onClick={() => reset()}>Try again</Button> */}
       </div>
     </div>
   );

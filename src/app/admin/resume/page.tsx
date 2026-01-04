@@ -2,8 +2,6 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
 
 interface ResumeItem {
   id: string;
@@ -51,23 +49,20 @@ export default function AdminResumePage() {
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-3xl font-bold">Manage Resume</h1>
         <Link href="/admin/resume/new">
-          <Button>Add New Item</Button>
+          {/* <Button>Add New Item</Button> */}
         </Link>
       </div>
 
-      {items.length === 0 ? (
+      {/* {items.length === 0 ? (
         <Card>
-          {/* <CardBody> */}
             <p className="text-center text-gray-600 dark:text-gray-400 py-8">
               No resume items yet. Add your first work experience!
             </p>
-          {/* </CardBody> */}
         </Card>
       ) : (
         <div className="space-y-4">
           {items.map((item) => (
             <Card key={item.id}>
-              {/* <CardBody> */}
                 <div className="flex justify-between items-start">
                   <div>
                     <h2 className="text-xl font-semibold">{item.position}</h2>
@@ -96,11 +91,10 @@ export default function AdminResumePage() {
                     </Button>
                   </div>
                 </div>
-              {/* </CardBody> */}
             </Card>
-          ))}
+          ))} 
         </div>
-      )}
+      )}*/}
     </div>
   );
 }

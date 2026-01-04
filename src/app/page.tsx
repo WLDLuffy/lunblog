@@ -1,49 +1,72 @@
 import Link from 'next/link';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
+import { Button, Card, Tag, Typography, Space, Row, Col } from 'antd';
+import { ReadOutlined, RocketOutlined, CodeOutlined } from '@ant-design/icons';
+import Title from 'antd/es/typography';
+import Paragraph from 'antd/es/typography';
 
 export default function HomePage() {
   return (
     <div className="max-w-6xl mx-auto px-6 py-24">
       <div className="max-w-3xl mx-auto text-center mb-20">
-        <Badge variant="secondary" className="mb-6 text-sm">Welcome to LunBlog</Badge>
-        <h1 className="text-7xl font-bold mb-8 leading-tight tracking-tight" style={{ fontFamily: 'Merriweather, Georgia, serif' }}>
+        <Tag color="blue" style={{ marginBottom: 24, fontSize: 14 }}>Welcome to LunBlog</Tag>
+        <Title style={{
+          fontFamily: 'Merriweather, Georgia, serif',
+          fontSize: '4rem',
+          marginBottom: 32,
+          lineHeight: 1.2
+        }}>
           Stay curious.
-        </h1>
-        <p className="text-2xl mb-12 leading-relaxed text-muted-foreground">
+        </Title>
+        <Paragraph style={{
+          fontSize: '1.5rem',
+          marginBottom: 48,
+          color: 'rgba(0, 0, 0, 0.65)'
+        }}>
           Discover stories, thinking, and expertise from writers on any topic.
-        </p>
-        <div className="flex gap-4 justify-center">
-          <Button asChild size="lg" className="text-base px-8 rounded-full">
-            <Link href="/blog">Start reading</Link>
-          </Button>
-          <Button asChild size="lg" variant="outline" className="text-base px-8 rounded-full">
-            <Link href="/about">Learn more</Link>
-          </Button>
-        </div>
+        </Paragraph>
+        <Space size="middle">
+          <Link href="/blog">
+            <Button type="primary" size="large" shape="round" style={{ paddingLeft: 32, paddingRight: 32 }}>
+              Start reading
+            </Button>
+          </Link>
+          <Link href="/about">
+            <Button size="large" shape="round" style={{ paddingLeft: 32, paddingRight: 32 }}>
+              Learn more
+            </Button>
+          </Link>
+        </Space>
       </div>
 
       <div className="mt-32">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold mb-3" style={{ fontFamily: 'Merriweather, Georgia, serif' }}>Featured Topics</h2>
-          <p className="text-muted-foreground">Explore our most popular categories</p>
+          <Title style={{ fontFamily: 'Merriweather, Georgia, serif', marginBottom: 16 }}>
+            Featured Topics
+          </Title>
+          <Paragraph style={{ fontSize: 16, color: 'rgba(0, 0, 0, 0.65)' }}>
+            Explore our most popular categories
+          </Paragraph>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <Row gutter={[24, 24]}>
           {[
-            { name: 'Technology', desc: 'Latest tech trends and innovations', icon: '💻' },
-            { name: 'Programming', desc: 'Code tutorials and best practices', icon: '⚡' },
-            { name: 'Career', desc: 'Professional growth and insights', icon: '🚀' }
+            { name: 'Technology', desc: 'Latest tech trends and innovations', icon: <ReadOutlined style={{ fontSize: 48 }} /> },
+            { name: 'Programming', desc: 'Code tutorials and best practices', icon: <CodeOutlined style={{ fontSize: 48 }} /> },
+            { name: 'Career', desc: 'Professional growth and insights', icon: <RocketOutlined style={{ fontSize: 48 }} /> }
           ].map((topic) => (
-            <Card key={topic.name} className="hover:shadow-lg transition-all hover:-translate-y-1 cursor-pointer border-border">
-              <CardContent className="p-8 text-center">
-                <div className="text-5xl mb-4">{topic.icon}</div>
-                <h3 className="text-xl font-bold mb-2">{topic.name}</h3>
-                <p className="text-sm text-muted-foreground">{topic.desc}</p>
-              </CardContent>
-            </Card>
+            <Col xs={24} md={8} key={topic.name}>
+              <Card
+                hoverable
+                style={{ textAlign: 'center', height: '100%' }}
+              >
+                <div style={{ marginBottom: 16, color: '#1890ff' }}>
+                  {topic.icon}
+                </div>
+                <Title >{topic.name}</Title>
+                <Paragraph>{topic.desc}</Paragraph>
+              </Card>
+            </Col>
           ))}
-        </div>
+        </Row>
       </div>
     </div>
   );

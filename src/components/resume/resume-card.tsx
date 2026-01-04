@@ -1,5 +1,7 @@
-import { Card, CardContent } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
+import { Card, Typography, Tag, Space } from 'antd';
+import Title from 'antd/es/typography';
+import Paragraph from 'antd/es/typography';
+import Text from 'antd/es/typography';
 
 interface ResumeCardProps {
   item: {
@@ -24,28 +26,26 @@ export function ResumeCard({ item }: ResumeCardProps) {
   const isCurrent = !item.endDate;
 
   return (
-    <Card className="hover:shadow-md transition-shadow">
-      <CardContent className="p-8">
-        <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-4">
-          <div>
-            <h3 className="text-2xl font-bold mb-2">{item.position}</h3>
-            <p className="text-xl font-medium text-muted-foreground mb-3">
-              {item.company}
-            </p>
-          </div>
-          <div className="flex items-center gap-2">
-            {isCurrent && (
-              <Badge variant="default" className="shrink-0">Current</Badge>
-            )}
-            <span className="text-sm text-muted-foreground whitespace-nowrap">
-              {startDateStr} - {endDateStr}
-            </span>
-          </div>
+    <Card hoverable style={{ marginBottom: 24 }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 16 }}>
+        <div>
+          <Title style={{ marginBottom: 8 }}>{item.position}</Title>
+          <Title style={{ fontWeight: 500, marginTop: 0 }}>
+            {item.company}
+          </Title>
         </div>
-        <p className="text-base leading-relaxed text-muted-foreground whitespace-pre-wrap">
-          {item.description}
-        </p>
-      </CardContent>
+        <Space>
+          {isCurrent && (
+            <Tag color="blue">Current</Tag>
+          )}
+          <Text style={{ whiteSpace: 'nowrap' }}>
+            {startDateStr} - {endDateStr}
+          </Text>
+        </Space>
+      </div>
+      <Paragraph style={{ fontSize: 16, whiteSpace: 'pre-wrap', marginTop: 16 }}>
+        {item.description}
+      </Paragraph>
     </Card>
   );
 }
